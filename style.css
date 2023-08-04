@@ -1,0 +1,232 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #020d18;
+  --color-secondary: #f1c40f;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--color-primary);
+  color: #fff;
+  position: relative;
+  overflow-x: hidden;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-block: 1rem;
+}
+.header a {
+  margin-left: 1.5rem;
+}
+.header a:hover {
+  color: #f1c40f;
+}
+.logo {
+  margin: 0 auto 0 2rem;
+  font-weight: 800;
+}
+.header-a {
+  margin: 0 2rem 0 auto;
+}
+
+.now-playing {
+  display: flex;
+  justify-content: center;
+  background: url(showcase-bg.jpg) no-repeat center center/cover;
+  width: 100vw;
+}
+.now-playing h2 {
+  margin: 3rem auto;
+}
+.search {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.search-radio {
+  margin-bottom: 0.6rem;
+}
+.search-radio input {
+  margin-left: 0.5rem;
+}
+.search-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.search-flex input {
+  flex: 6;
+  width: 100%;
+  background: transparent;
+  border: 1px solid #fff;
+  padding: 1rem;
+  padding-right: 10rem;
+  border-radius: 5px;
+  color: #fff;
+  height: 3rem;
+  margin-right: 0.7rem;
+}
+.btn {
+  background-color: var(--color-secondary);
+  padding: 1rem;
+  border-radius: 99999px;
+  cursor: pointer;
+}
+.popular-movies,
+.popular-shows {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  background: #06012d;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+.popular-movies h2,
+.popular-shows h2 {
+  margin-top: 1rem;
+  margin-inline: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.2rem;
+  width: 90vw;
+  font-size: 20px;
+  margin-inline: auto;
+}
+.social-links {
+  margin-right: 2rem;
+}
+
+.back-to {
+  margin-top: 2rem;
+  margin-inline: auto;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-secondary);
+  width: fit-content;
+  margin-inline: auto;
+}
+.back-to:hover {
+  transform: scale(0.9);
+}
+.active {
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+
+.card {
+  background: #04376b;
+  padding: 0.3rem;
+  margin-top: 2rem;
+}
+
+.card img {
+  width: 100%;
+  height: 19rem;
+  min-width: fit-content;
+}
+
+.card-body {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  transition: all 0.5s ease-in-out;
+  background: #0a4b8f;
+  z-index: 1;
+}
+.grid {
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center; */
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+.details-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0 0;
+}
+
+.details-middle {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 700px) {
+  .details-top {
+    display: block;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: #ccc solid 1px;
+  }
+}
+
+.details-top img {
+  width: 400px;
+  height: 100%;
+  margin-right: 60px;
+  object-fit: cover;
+  background: #04376b;
+  padding: 0.3rem;
+}
+.card-img-top:hover {
+  transform: scale(0.9);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.details-top p {
+  margin: 20px 0;
+}
+
+.button {
+  height: 3rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  width: fit-content;
+}
+.button:hover {
+  transform: scale(0.9);
+  border: 1px solid rgb(253, 249, 255);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.details-bottom li {
+  margin: 1rem 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #fff;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+#movie-details {
+  width: 80vw;
+  margin-inline: auto;
+  /* border-radius: 1rem; */
+  background: #06012d;
+  padding: 1.5rem;
+  /* border: 0.5rem solid var(--color-secondary); */
+}

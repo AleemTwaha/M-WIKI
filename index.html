@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./spinner.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Movie Wiki</title>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header">
+      <div class="logo"><a href="index.html">M-WIKI</a></div>
+      <div class="header-a">
+        <a href="/" class="nav-link link1">Movies</a>
+        <a href="/shows.html" class="nav-link link2">TV Shows</a>
+      </div>
+    </div>
+    <!-- Now Playing -->
+    <div class="now-playing">
+      <h2>Now Paying</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper"></div>
+      </div>
+    </div>
+    <!-- Search Movies -->
+    <div class="search">
+      <form action="" class="search-form">
+        <div class="search-radio">
+          <input type="radio" id="movie" name="type" value="movie" checked />
+          <label for="movies">Movies</label>
+          <input type="radio" id="tv" name="type " value="tv" />
+          <label for="shows">TV Shows</label>
+        </div>
+        <div class="search-flex">
+          <input
+            type="text"
+            name="search-term"
+            id="search-term"
+            placeholder="Enter to Search"
+          />
+          <button type="submit" class="btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Popular Movies -->
+    <div class="popular-movies">
+      <h2>Popular Movies</h2>
+      <div class="grid" id="popular-movies"></div>
+    </div>
+    <!-- Footer -->
+
+    <div class="footer">
+      <div class="logo"><span>M-WIKI</span></div>
+      <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+        <a href="https://www.twitter.com" target="_blank"
+          ><i class="fab fa-twitter"></i
+        ></a>
+        <a href="https://www.instagram.com" target="_blank"
+          ><i class="fab fa-instagram"></i
+        ></a>
+      </div>
+    </div>
+    <div class="spinner"></div>
+    <script src="./js.js" defer></script>
+  </body>
+</html>
