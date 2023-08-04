@@ -106,6 +106,7 @@ a {
   display: flex;
   justify-content: space-around;
   margin-top: 1.2rem;
+
   width: 90vw;
   font-size: 20px;
   margin-inline: auto;
@@ -183,10 +184,9 @@ a {
     border-bottom: #ccc solid 1px;
   }
 }
-
-.details-top img {
-  width: 400px;
-  height: 100%;
+.card-img-top {
+  width: 350px;
+  height: 90%;
   margin-right: 60px;
   object-fit: cover;
   background: #04376b;
@@ -204,7 +204,7 @@ a {
 
 .button {
   height: 3rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 1rem;
   width: fit-content;
 }
@@ -221,12 +221,23 @@ a {
   border-bottom: 1px solid #fff;
   border-color: rgba(255, 255, 255, 0.1);
 }
+.details-bottom {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.details-bottom h2 {
+  margin-inline: auto;
+}
 
-#movie-details {
+.movie-details,
+.show-details {
   width: 80vw;
   margin-inline: auto;
-  /* border-radius: 1rem; */
-  background: #06012d;
+
+  border-radius: 1rem;
+  /* background: #06012d; */
   padding: 1.5rem;
-  /* border: 0.5rem solid var(--color-secondary); */
+  border: 0.5rem solid var(--color-secondary);
+  overflow-y: hidden;
 }

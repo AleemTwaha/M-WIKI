@@ -97,7 +97,7 @@ async function displayMovieDetails() {
   const movie = await fetchAPIData(`movie/${movieId}`);
 
   // Overlay for background image
-  // displayBackgroundImage("movie", movie.backdrop_path);
+  displayBackgroundImage("movie", movie.backdrop_path);
 
   const div = document.createElement("div");
 
@@ -161,7 +161,84 @@ async function displayMovieDetails() {
 </div>
   `;
 
-  document.querySelector("#movie-details").appendChild(div);
+  document.querySelector(".movie-details").appendChild(div);
+}
+
+async function displayShowDetails() {
+  const showId = window.location.search.split("=")[1];
+
+  const show = await fetchAPIData(`tv/${showId}`);
+
+  // Overlay for background image
+  displayBackgroundImage("movie", movie.backdrop_path);
+
+  const div = document.createElement("div");
+
+  div.innerHTML = `
+  <div class="details-top">
+  <div>
+  ${
+    show.poster_path
+      ? `<a href="${show.homepage}" target="_blank" > <img
+      src="https://image.tmdb.org/t/p/w500${show.poster_path}"
+      class="card-img-top"
+      alt="${show.name}"
+    /></a>`
+      : `<img
+  src="../images/no-image.jpg"
+  class="card-img-top"
+  alt="${show.name}"
+/>`
+  }
+ 
+  </div>
+  <div class="details-middle">
+    <h2>${show.name}</h2>
+    <p>
+      <i class="fas fa-star text-primary"></i>
+      ${show.vote_average.toFixed(1)} / 10
+    </p>
+    <p class="text-muted">Release Date: ${show.release_date}</p>
+    <p>
+      ${show.overview}
+    </p>
+    <h5>Genres</h5>
+    <ul class="list-group">
+      ${show.genres.map((genre) => `<li>${genre.name}</li>`).join("")}
+    </ul>
+    <div class="button btn">
+    <a href="${show.homepage}" target="_blank" >Visit Movie Homepage</a>
+    </div>
+  </div>
+</div>
+
+  `;
+
+  document.querySelector(".show-details").appendChild(div);
+}
+function displayBackgroundImage(type, backgroundPath) {
+  const overlayDiv = document.createElement("div");
+  overlayDiv.style.backgroundImage = `url(https://image.tmdb.org/t/p/original/${backgroundPath})`;
+  overlayDiv.style.backgroundSize = "cover";
+  overlayDiv.style.backgroundPosition = "center";
+  overlayDiv.style.backgroundRepeat = "no-repeat";
+  overlayDiv.style.height = "100%";
+  overlayDiv.style.width = "100%";
+  overlayDiv.style.maxHeight = "889px";
+  overlayDiv.style.maxWidth = "100%";
+
+  overlayDiv.style.position = "absolute";
+  overlayDiv.style.top = "2rem";
+  overlayDiv.style.left = "0";
+
+  overlayDiv.style.zIndex = "-1";
+  overlayDiv.style.opacity = "0.1";
+
+  if (type === "movie") {
+    document.querySelector(".movie-details").appendChild(overlayDiv);
+  } else {
+    document.querySelector(".show-details").appendChild(overlayDiv);
+  }
 }
 
 function highlightActiveLink() {
@@ -171,8 +248,6 @@ function highlightActiveLink() {
       let href = link.getAttribute("href");
       link.classList.add("active");
       console.log(href);
-    } else if (global.currentPage === "/show-details.html") {
-      link.classList.add("active");
     }
 
     let href = link.getAttribute("href");
@@ -209,6 +284,7 @@ function init() {
       break;
     case "/show-details.html":
       console.log("Show Details");
+      displayShowDetails();
       break;
     case "/search.html":
       console.log("Search");
