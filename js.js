@@ -170,7 +170,7 @@ async function displayShowDetails() {
   const show = await fetchAPIData(`tv/${showId}`);
 
   // Overlay for background image
-  displayBackgroundImage("movie", movie.backdrop_path);
+  displayBackgroundImage("tv", show.backdrop_path);
 
   const div = document.createElement("div");
 
@@ -198,7 +198,7 @@ async function displayShowDetails() {
       <i class="fas fa-star text-primary"></i>
       ${show.vote_average.toFixed(1)} / 10
     </p>
-    <p class="text-muted">Release Date: ${show.release_date}</p>
+    <p class="text-muted">Last Air Date Date: ${show.last_air_date}</p>
     <p>
       ${show.overview}
     </p>
@@ -209,6 +209,28 @@ async function displayShowDetails() {
     <div class="button btn">
     <a href="${show.homepage}" target="_blank" >Visit Movie Homepage</a>
     </div>
+  </div>
+  </div>
+  <div class="details-bottom">
+  <h2>Show Info</h2>
+  <ul>
+    <li><span class="text-secondary">No.of Episodes:</span> ${
+      show.number_of_episodes
+    }
+      
+  </li>
+    <li><span class="text-secondary">Last Episode on:</span> ${
+      show.last_episode_to_air.name
+    }
+    </li>
+  
+    <li><span class="text-secondary">Status:</span> ${show.status}</li>
+  </ul>
+  <h4>Production Companies</h4>
+  <div class="list-group">
+    ${show.production_companies
+      .map((company) => `<span>${company.name}</span>`)
+      .join(", ")}
   </div>
 </div>
 
@@ -225,20 +247,67 @@ function displayBackgroundImage(type, backgroundPath) {
   overlayDiv.style.height = "100%";
   overlayDiv.style.width = "100%";
   overlayDiv.style.maxHeight = "889px";
+
   overlayDiv.style.maxWidth = "100%";
 
   overlayDiv.style.position = "absolute";
   overlayDiv.style.top = "2rem";
   overlayDiv.style.left = "0";
-
+  overlayDiv.style.border = "0.5rem solid var(--color-secondary)";
   overlayDiv.style.zIndex = "-1";
   overlayDiv.style.opacity = "0.1";
-
   if (type === "movie") {
     document.querySelector(".movie-details").appendChild(overlayDiv);
   } else {
+    overlayDiv.style.maxHeight = "830px";
     document.querySelector(".show-details").appendChild(overlayDiv);
   }
+}
+
+async function displaySlider() {
+  const { results } = await fetchAPIData("movie/now_playing");
+
+  results.forEach((movie) => {
+    const div = document.createElement("div");
+    div.classList.add("swiper-slide");
+
+    div.innerHTML = `
+      <a href="moviedetails.html?id=${movie.id}">
+        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
+      </a>
+      <h4 class="swiper-rating">
+        <i class="fas fa-star text-secondary"></i> ${movie.vote_average} / 10
+      </h4>
+    `;
+
+    document.querySelector(".swiper-wrapper").appendChild(div);
+
+    initSwiper();
+  });
+}
+
+function initSwiper() {
+  const swiper = new Swiper(".swiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    freeMode: true,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      500: {
+        slidesPerView: 2,
+      },
+      700: {
+        slidesPerView: 3,
+      },
+      1200: {
+        slidesPerView: 4,
+      },
+    },
+  });
 }
 
 function highlightActiveLink() {
@@ -274,6 +343,7 @@ function init() {
     case "/index.html":
     case "/":
       console.log("Home");
+      displaySlider();
       displayPopularMovies();
 
       break;
