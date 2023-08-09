@@ -285,15 +285,36 @@ async function displaySlider() {
     initSwiper();
   });
 }
+async function displayShowSlider() {
+  const { results } = await fetchAPIData("tv/popular");
+
+  results.forEach((result) => {
+    const div = document.createElement("div");
+    div.classList.add("swiper-slide");
+
+    div.innerHTML = `
+      <a href="show-details.html?id=${result.id}">
+        <img src="https://image.tmdb.org/t/p/w500${result.poster_path}" alt="${result.name}" />
+      </a>
+      <h4 class="swiper-rating">
+        <i class="fas fa-star text-secondary"></i> ${result.vote_average} / 10
+      </h4>
+    `;
+
+    document.querySelector(".swiper-wrapper").appendChild(div);
+
+    initSwiper();
+  });
+}
 
 function initSwiper() {
   const swiper = new Swiper(".swiper", {
     slidesPerView: 1,
-    spaceBetween: 30,
+    spaceBetween: 40,
     freeMode: true,
     loop: true,
     autoplay: {
-      delay: 4000,
+      delay: 3000,
       disableOnInteraction: false,
     },
     breakpoints: {
@@ -349,6 +370,7 @@ function init() {
       break;
     case "/shows.html":
       console.log("shows");
+      displayShowSlider();
       displayPopularShows();
 
       break;
