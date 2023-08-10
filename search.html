@@ -29,13 +29,27 @@
         <a href="/shows.html" class="nav-link link2">TV Shows</a>
       </div>
     </div>
+    <div id="alert"></div>
     <!-- search movies -->
     <div class="search">
-      <form action="" class="search-form">
+      <form action="search.html" class="search-form">
         <div class="search-radio">
-          <input type="radio" id="movie" name="type" value="movie" checked />
+          <input
+            class="radioMovie"
+            type="radio"
+            id="movie"
+            name="type"
+            checked
+            value="movie"
+          />
           <label for="movies">Movies</label>
-          <input type="radio" id="tv" name="type " value="tv" />
+          <input
+            class="radioShow"
+            type="radio"
+            id="tv"
+            name="type"
+            value="tv"
+          />
           <label for="shows">TV Shows</label>
         </div>
         <div class="search-flex">
@@ -51,21 +65,10 @@
         </div>
       </form>
     </div>
-
-    <div class="footer">
-      <div class="logo"><span>M-WIKI</span></div>
-      <div class="social-links">
-        <a href="https://www.facebook.com" target="_blank"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-        <a href="https://www.twitter.com" target="_blank"
-          ><i class="fab fa-twitter"></i
-        ></a>
-        <a href="https://www.instagram.com" target="_blank"
-          ><i class="fab fa-instagram"></i
-        ></a>
-      </div>
-    </div>
+    <div id="search-results-heading"></div>
+    <div class="grid" id="search-results"></div>
+    <div id="pagination"></div>
+    <div class="spinner"></div>
     <script src="./js.js" defer></script>
   </body>
 </html>

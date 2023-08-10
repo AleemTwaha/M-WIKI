@@ -1,6 +1,19 @@
 let spinner = document.querySelector(".spinner");
 const global = {
   currentPage: window.location.pathname,
+  search: {
+    term: "",
+    type: "",
+    page: 1,
+    totalPages: 1,
+    totalResults: 0,
+  },
+  api: {
+    // Register your key at https://www.themoviedb.org/settings/api and enter here
+    // Only use this for development or very small projects. You should store your key and make requests from a server
+    apiKey: "a30acb2501b4c6b627e3ab90f9244366",
+    apiUrl: "https://api.themoviedb.org/3/",
+  },
 };
 
 const options = {
@@ -38,7 +51,7 @@ async function displayPopularMovies() {
               alt="${result.title}"
             />`
                 : `<img
-            src="../images/no-image.jpg"
+            src="./no-image.jpg"
             class="card-img-top"
             alt="${result.title}"
           />`
@@ -47,7 +60,7 @@ async function displayPopularMovies() {
           <div class="card-body">
             <h5 class="card-title">${result.title}</h5>
             <p class="card-text">
-              <small class="text-muted">Release: ${result.release_date}</small>
+              <small >Release: ${result.release_date}</small>
             </p>
           </div>
         `;
@@ -62,7 +75,7 @@ async function displayPopularShows() {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
-          <a href="show-details.html?id=${result.id}">
+          <a href="tvdetails.html?id=${result.id}">
             ${
               result.poster_path
                 ? `<img
@@ -71,7 +84,7 @@ async function displayPopularShows() {
               alt="${result.name}"
             />`
                 : `<img
-            src="../images/no-image.jpg"
+            src="./no-image.jpg"
             class="card-img-top"
             alt="${result.name}"
           />`
@@ -80,9 +93,7 @@ async function displayPopularShows() {
           <div class="card-body">
             <h5 class="card-title">${result.name}</h5>
             <p class="card-text">
-              <small class="text-muted">Release: ${
-                result.first_air_date
-              }</small>
+              <small >Release: ${result.first_air_date}</small>
             </p>
           </div>
         `;
@@ -108,12 +119,12 @@ async function displayMovieDetails() {
     movie.poster_path
       ? `<a href="${movie.homepage}" target="_blank" > <img
       src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
-      class="card-img-top"
+      class="card-img-top details"
       alt="${movie.title}"
     /></a>`
       : `<img
-  src="../images/no-image.jpg"
-  class="card-img-top"
+  src="./no-image.jpg"
+  class="card-img-top details"
   alt="${movie.title}"
 />`
   }
@@ -125,7 +136,7 @@ async function displayMovieDetails() {
       <i class="fas fa-star text-primary"></i>
       ${movie.vote_average.toFixed(1)} / 10
     </p>
-    <p class="text-muted">Release Date: ${movie.release_date}</p>
+    <p Release Date: ${movie.release_date}</p>
     <p>
       ${movie.overview}
     </p>
@@ -181,12 +192,12 @@ async function displayShowDetails() {
     show.poster_path
       ? `<a href="${show.homepage}" target="_blank" > <img
       src="https://image.tmdb.org/t/p/w500${show.poster_path}"
-      class="card-img-top"
+      class="card-img-top details"
       alt="${show.name}"
     /></a>`
       : `<img
-  src="../images/no-image.jpg"
-  class="card-img-top"
+  src="./no-image.jpg"
+  class="card-img-top details"
   alt="${show.name}"
 />`
   }
@@ -198,7 +209,7 @@ async function displayShowDetails() {
       <i class="fas fa-star text-primary"></i>
       ${show.vote_average.toFixed(1)} / 10
     </p>
-    <p class="text-muted">Last Air Date Date: ${show.last_air_date}</p>
+    <p>Last Air Date Date: ${show.last_air_date}</p>
     <p>
       ${show.overview}
     </p>
@@ -249,6 +260,7 @@ function displayBackgroundImage(type, backgroundPath) {
   overlayDiv.style.maxHeight = "889px";
 
   overlayDiv.style.maxWidth = "100%";
+  overlayDiv.style.minWidth = "auto";
 
   overlayDiv.style.position = "absolute";
   overlayDiv.style.top = "2rem";
@@ -293,7 +305,7 @@ async function displayShowSlider() {
     div.classList.add("swiper-slide");
 
     div.innerHTML = `
-      <a href="show-details.html?id=${result.id}">
+      <a href="tvdetails.html?id=${result.id}">
         <img src="https://image.tmdb.org/t/p/w500${result.poster_path}" alt="${result.name}" />
       </a>
       <h4 class="swiper-rating">
@@ -305,6 +317,156 @@ async function displayShowSlider() {
 
     initSwiper();
   });
+}
+
+async function search() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  global.search.type = urlParams.get("type");
+  global.search.term = urlParams.get("search-term");
+  console.log(global.search.term);
+  console.log(global.search.type);
+
+  if (global.search.term !== "" || global.search.term !== null) {
+    const { results, total_pages, page, total_results } = await fetchAPIData(
+      `search/${global.search.type}?language=en-US&query=${global.search.term}&page=${global.search.page}`
+    );
+    console.log(results);
+    global.search.page = page;
+    global.search.totalPages = total_pages;
+    global.search.totalResults = total_results;
+
+    if (results.length === 0) {
+      showAlert("No results found");
+      return;
+    }
+
+    displaySearchResults(results);
+
+    document.querySelector("#search-term").value = "";
+  } else {
+    showAlert("select the type");
+  }
+}
+// async function searchAPIData() {
+//   const API_KEY = global.api.apiKey;
+//   const API_URL = global.api.apiUrl;
+
+//   showSpinner();
+
+//   const response = await fetch(
+//     `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}&page=${global.search.page}`
+//   );
+
+//   const data = await response.json();
+
+//   hideSpinner();
+
+//   return data;
+// }
+
+function displaySearchResults(results) {
+  // Clear previous results
+  document.querySelector("#search-results").innerHTML = "";
+  document.querySelector("#search-results-heading").innerHTML = "";
+  document.querySelector("#pagination").innerHTML = "";
+  console.log(results);
+
+  results.forEach((result) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = `
+          <a href="${global.search.type}details.html?id=${result.id}">
+            ${
+              result.poster_path
+                ? `<img
+              src="https://image.tmdb.org/t/p/w500${result.poster_path}"
+              class="card-img-top"
+              alt="${
+                global.search.type === "movie" ? result.title : result.name
+              }"
+            />`
+                : `<img
+            src="./no-image.jpg"
+            class="card-img-top"
+             alt="${
+               global.search.type === "movie" ? result.title : result.name
+             }"
+          />`
+            }
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">${
+              global.search.type === "movie" ? result.title : result.name
+            }</h5>
+            <p class="card-text">
+              <small class="text-muted">Release: ${
+                global.search.type === "movie"
+                  ? result.release_date
+                  : result.first_air_date
+              }</small>
+            </p>
+          </div>
+        `;
+
+    document.querySelector("#search-results-heading").innerHTML = `
+              <h2>${results.length} of ${global.search.totalResults} Results for ${global.search.term}</h2>
+    `;
+
+    document.querySelector("#search-results").appendChild(div);
+  });
+
+  displayPagination();
+}
+
+// Create & Display Pagination For Search
+function displayPagination() {
+  const div = document.createElement("div");
+  div.classList.add("pagination");
+  div.innerHTML = `
+  <button class="btn " id="prev">Prev</button>
+  <button class="btn " id="next">Next</button>
+  <div class="page-counter">Page ${global.search.page} of ${global.search.totalPages}</div>
+  `;
+
+  document.querySelector("#pagination").appendChild(div);
+
+  // Disable prev button if on first page
+  if (global.search.page === 1) {
+    document.querySelector("#prev").disabled = true;
+  }
+
+  // Disable next button if on last page
+  if (global.search.page === global.search.totalPages) {
+    document.querySelector("#next").disabled = true;
+  }
+
+  // Next page
+  document.querySelector("#next").addEventListener("click", async () => {
+    global.search.page++;
+    const { results, total_pages } = await fetchAPIData(
+      `search/${global.search.type}?language=en-US&query=${global.search.term}&page=${global.search.page}`
+    );
+    displaySearchResults(results);
+  });
+
+  // Prev page
+  document.querySelector("#prev").addEventListener("click", async () => {
+    global.search.page--;
+    const { results, total_pages } = await fetchAPIData(
+      `search/${global.search.type}?language=en-US&query=${global.search.term}&page=${global.search.page}`
+    );
+    displaySearchResults(results);
+  });
+}
+function showAlert(message, className = "error") {
+  const alertEl = document.createElement("div");
+  alertEl.classList.add("alert", className);
+  alertEl.appendChild(document.createTextNode(message));
+  document.querySelector("#alert").appendChild(alertEl);
+
+  setTimeout(() => alertEl.remove(), 3000);
 }
 
 function initSwiper() {
@@ -339,11 +501,9 @@ function highlightActiveLink() {
       link.classList.add("active");
       console.log(href);
     }
-
-    let href = link.getAttribute("href");
-    console.log(href);
   });
 }
+
 function showSpinner() {
   spinner.classList.add("show");
 }
@@ -354,6 +514,20 @@ function hideSpinner() {
 function addCommasToNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+const button = document.querySelector(".btn");
+
+const radioShow = document.querySelector(".radioShow");
+const radioMovie = document.querySelector(".radioMovie");
+if (radioMovie && radioShow) {
+  radioMovie.addEventListener("click", () => {
+    radioShow.checked = false;
+  });
+  radioShow.addEventListener("click", () => {
+    radioMovie.checked = false;
+  });
+}
+
 function init() {
   switch (global.currentPage) {
     case "/moviedetails.html":
@@ -366,6 +540,7 @@ function init() {
       console.log("Home");
       displaySlider();
       displayPopularMovies();
+      // search();
 
       break;
     case "/shows.html":
@@ -374,12 +549,14 @@ function init() {
       displayPopularShows();
 
       break;
-    case "/show-details.html":
+    case "/tvdetails.html":
       console.log("Show Details");
       displayShowDetails();
       break;
     case "/search.html":
-      console.log("Search");
+      search();
+      console.log(window.location.href);
+
       break;
   }
   highlightActiveLink();

@@ -36,6 +36,42 @@
         <div class="swiper-wrapper"></div>
       </div>
     </div>
+
+    <div class="search">
+      <form action="search.html" class="search-form">
+        <div class="search-radio">
+          <input
+            class="radioMovie"
+            type="radio"
+            id="movie"
+            name="type"
+            value="movie"
+          />
+          <label for="movies">Movies</label>
+          <input
+            class="radioShow"
+            type="radio"
+            id="tv"
+            name="type "
+            value="tv"
+            checked
+          />
+          <label for="shows">TV Shows</label>
+        </div>
+        <div class="search-flex">
+          <input
+            type="text"
+            name="search-term"
+            id="search-term"
+            placeholder="Enter to Search"
+          />
+
+          <button type="submit" class="btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
     <!-- Popular Movies -->
     <div class="popular-shows">
       <h2>Popular TV Shows</h2>
