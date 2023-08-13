@@ -334,7 +334,7 @@ async function search() {
   console.log(global.search.term);
   console.log(global.search.type);
 
-  if (global.search.term !== "" || global.search.term !== null) {
+  if (global.search.term !== "" && global.search.term !== null) {
     const { results, total_pages, page, total_results } = await fetchAPIData(
       `search/${global.search.type}?language=en-US&query=${global.search.term}&page=${global.search.page}`
     );
