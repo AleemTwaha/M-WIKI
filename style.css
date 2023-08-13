@@ -138,7 +138,7 @@ a {
   width: 80vw;
   text-align: center;
   margin: 0 auto;
-  background: #06012d;
+  background: linear-gradient(rgb(199, 172, 172), #050505);
   padding: 2rem;
   margin-top: 1rem;
   margin-inline: auto;
@@ -228,10 +228,11 @@ a {
   height: 100%;
   margin-right: 60px;
   object-fit: cover;
-  background: #04376b;
+  background: #708ba5;
   padding: 0.3rem;
   max-height: fit-content;
   z-index: 1;
+  border-radius: 6px;
 }
 
 .card-img-top:hover {
