@@ -75,6 +75,7 @@ async function displayPopularShows() {
     const div = document.createElement("div");
     div.classList.add("card");
     div.innerHTML = `
+    <div class="imgContainer">
           <a href="tvdetails.html?id=${result.id}">
             ${
               result.poster_path
@@ -90,10 +91,11 @@ async function displayPopularShows() {
           />`
             }
           </a>
+          </div>
           <div class="card-body">
             <h5 class="card-title">${result.name}</h5>
             <p class="card-text">
-              <small >Release: ${result.first_air_date}</small>
+              <small>Release: ${result.first_air_date}</small>
             </p>
           </div>
         `;
@@ -144,9 +146,11 @@ async function displayMovieDetails() {
     <ul class="list-group">
       ${movie.genres.map((genre) => `<li>${genre.name}</li>`).join("")}
     </ul>
+    <a href="${movie.homepage}" target="_blank" >
     <div class="button btn">
-    <a href="${movie.homepage}" target="_blank" >Visit Movie Homepage</a>
+    Visit Movie Homepage
     </div>
+    </a>
   </div>
 </div>
 <div class="details-bottom">
@@ -217,9 +221,11 @@ async function displayShowDetails() {
     <ul class="list-group">
       ${show.genres.map((genre) => `<li>${genre.name}</li>`).join("")}
     </ul>
+    <a href="${show.homepage}" target="_blank" >
     <div class="button btn">
-    <a href="${show.homepage}" target="_blank" >Visit Movie Homepage</a>
+    Visit Movie Homepage
     </div>
+    </a>
   </div>
   </div>
   <div class="details-bottom">
@@ -563,4 +569,5 @@ function init() {
 }
 
 window.addEventListener("DOMContentLoaded", init);
+
 // window.addEventListener("DOMContentLoaded", highlightActiveLink);
