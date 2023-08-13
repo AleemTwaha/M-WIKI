@@ -35,6 +35,9 @@ a {
     margin-inline: 0.8rem;
     font-size: 14px;
   }
+  .swiper-slide {
+    padding: 1rem;
+  }
 }
 .header a {
   margin-left: 1.5rem;
